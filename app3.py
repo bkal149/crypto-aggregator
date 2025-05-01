@@ -250,8 +250,8 @@ def get_live_prices(symbols):
             tickers = yf.Tickers(" ".join(yahoo_symbols))
             for sym in yahoo_symbols:
                 ticker = tickers.tickers.get(sym)
-                if ticker and hasattr(ticker, "fast_info") and ticker.fast_info.get("last_price"):
-                    prices[sym] = ticker.fast_info["last_price"]
+                if ticker and ticker.info.get("regularMarketPrice"):
+                    prices[sym] = ticker.info["regularMarketPrice"]
 
         return prices
     except Exception as e:
@@ -266,7 +266,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
     
-@st.cache_data(ttl=600)  # Cache for 10 minutes instead of 5
+@st.cache_data(ttl=300)  # Cache results for 5 minutes
 def get_live_prices_cached(symbol_str):
     symbol_list = symbol_str.split(",")
     coingecko_ids = {
@@ -301,8 +301,8 @@ def get_live_prices_cached(symbol_str):
         for sym in yahoo_symbols:
             try:
                 ticker = tickers.tickers.get(sym)
-                if ticker and hasattr(ticker, "fast_info") and ticker.fast_info.get("last_price"):
-                    prices[sym] = ticker.fast_info["last_price"]
+                if ticker and ticker.info.get("regularMarketPrice"):
+                    prices[sym] = ticker.info["regularMarketPrice"]
             except Exception:
                 continue
 
