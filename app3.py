@@ -266,7 +266,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
     
-@st.cache_data(ttl=300)  # Cache results for 5 minutes
+@st.cache_data(ttl=600)  # Cache for 10 minutes instead of 5
 def get_live_prices_cached(symbol_str):
     symbol_list = symbol_str.split(",")
     coingecko_ids = {
