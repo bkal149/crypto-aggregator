@@ -251,7 +251,7 @@ def get_live_prices(symbols):
             for sym in yahoo_symbols:
                 ticker = tickers.tickers.get(sym)
                 if ticker and hasattr(ticker, "fast_info") and ticker.fast_info.get("last_price"):
-                    prices[sym] = ticker.info["regularMarketPrice"]
+                    prices[sym] = ticker.fast_info["last_price"]
 
         return prices
     except Exception as e:
@@ -302,7 +302,7 @@ def get_live_prices_cached(symbol_str):
             try:
                 ticker = tickers.tickers.get(sym)
                 if ticker and hasattr(ticker, "fast_info") and ticker.fast_info.get("last_price"):
-                    prices[sym] = ticker.info["regularMarketPrice"]
+                    prices[sym] = ticker.fast_info["last_price"]
             except Exception:
                 continue
 
